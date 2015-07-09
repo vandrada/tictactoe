@@ -28,6 +28,10 @@ public class Game {
         this.player2 = player2;
     }
 
+    public void update(GameBoard.Positions pos, char mark) {
+        this.board.mark(pos, mark);
+    }
+
     @JsonProperty
     public long getId() {
         return this.id;

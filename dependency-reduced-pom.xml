@@ -62,6 +62,7 @@
     </plugins>
   </build>
   <properties>
+    <h2.version>1.4.187</h2.version>
     <dropwizard.version>0.8.2</dropwizard.version>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

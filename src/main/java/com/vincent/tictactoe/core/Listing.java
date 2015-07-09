@@ -41,8 +41,8 @@ public class Listing {
         this(Arrays.asList(games));
     }
 
-    public Game createGame(Player firstPlayer, Player secondPlayer) {
-        return new Game(this.counter.getAndIncrement(), firstPlayer, secondPlayer);
+    public Game createGame(Player firstPlayer) {
+        return new Game(this.counter.getAndIncrement(), firstPlayer, null);
     }
 
     public Game updateGame(long id, Player player) {

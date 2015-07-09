@@ -1,6 +1,7 @@
 package com.vincent.tictactoe.resources;
 
 import com.codahale.metrics.annotation.Timed;
+import com.google.common.base.Optional;
 import com.vincent.tictactoe.core.Game;
 import com.vincent.tictactoe.core.Listing;
 import com.vincent.tictactoe.core.Player;
@@ -15,15 +16,17 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class JoinGameResource {
     private Listing listing;
+    private final String player2Default;
 
-    public JoinGameResource(Listing listing) {
+    public JoinGameResource(Listing listing, String player2Default) {
         this.listing = listing;
+        this.player2Default = player2Default;
     }
 
     @GET
     @Timed
     public Game joinGame(@QueryParam("id") long id,
-                         @QueryParam("name") String name) {
-       return listing.updateGame(id, new Player(name));
+                         @QueryParam("name") Optional<String> name) {
+       return listing.updateGame(id, new Player(name.or(player2Default)));
     }
 }

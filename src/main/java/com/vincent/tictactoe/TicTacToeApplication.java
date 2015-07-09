@@ -5,8 +5,9 @@ import com.vincent.tictactoe.core.Listing;
 import com.vincent.tictactoe.resources.GameListingResource;
 import com.vincent.tictactoe.resources.JoinGameResource;
 import com.vincent.tictactoe.resources.NewGameResource;
-
 import io.dropwizard.Application;
+import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
@@ -22,6 +23,13 @@ public class TicTacToeApplication extends Application<TicTacToeConfiguration> {
 
     @Override
     public void initialize(Bootstrap<TicTacToeConfiguration> bootstrap) {
+        bootstrap.addBundle(new MigrationsBundle<TicTacToeConfiguration>() {
+            @Override
+            public DataSourceFactory getDataSourceFactory
+                (TicTacToeConfiguration config) {
+                return config.getDataSourceFactory();
+            }
+        });
         // ...
     }
 
@@ -33,14 +41,19 @@ public class TicTacToeApplication extends Application<TicTacToeConfiguration> {
         // games, remove games, and join a game
         Listing listing = new Listing(new Game[]{});
 
-        final NewGameResource newGame = new NewGameResource(listing);
+        final NewGameResource newGame = new NewGameResource(listing,
+            configuration.getFirstPlayerDefault());
         environment.jersey().register(newGame);
 
-        final JoinGameResource joinGame = new JoinGameResource(listing);
+        final JoinGameResource joinGame = new JoinGameResource(listing,
+            configuration.getSecondPlayerDefault());
         environment.jersey().register(joinGame);
 
         final GameListingResource gameListing = new GameListingResource(listing);
         environment.jersey().register(gameListing);
+
+        //final GamePlayResource gamePlay = new GamePlayResource();
+        //environment.jersey().register(gamePlay);
 
         // TODO health check
     }

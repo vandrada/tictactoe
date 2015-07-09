@@ -21,7 +21,8 @@ public class GamePlayResource {
 
     @GET
     @Timed
-    public void mark(@QueryParam("pos") GameBoard.Positions pos) {
+    public void mark(@QueryParam("token") String token,
+                     @QueryParam("pos") GameBoard.Positions pos) {
         game.update(pos, 'X');
     }
 }

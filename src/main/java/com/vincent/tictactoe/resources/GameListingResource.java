@@ -1,7 +1,7 @@
 package com.vincent.tictactoe.resources;
 
 import com.codahale.metrics.annotation.Timed;
-import com.vincent.tictactoe.core.Listing;
+import com.vincent.tictactoe.core.GameManager;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,15 +11,16 @@ import javax.ws.rs.core.MediaType;
 @Path("/list")
 @Produces(MediaType.APPLICATION_JSON)
 public class GameListingResource {
-    private final Listing listing;
+    private final GameManager gameManager;
 
-    public GameListingResource(Listing listing) {
-        this.listing =  listing;
+    public GameListingResource(GameManager gameManager) {
+        this.gameManager = gameManager;
     }
 
     @GET
     @Timed
-    public Listing gameListing(){
-        return new Listing(this.listing.getGames());
+    public GameManager gameListing(){
+        // TODO funky...
+        return new GameManager(this.gameManager.getGames());
     }
 }

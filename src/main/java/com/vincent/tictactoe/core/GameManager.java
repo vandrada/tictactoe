@@ -20,15 +20,15 @@ import java.util.concurrent.atomic.AtomicLong;
  *      }
  *  }
  */
-public class Listing {
+public class GameManager {
     private Map<Long, Game> games;
     private AtomicLong counter;
 
-    public Listing() {
+    public GameManager() {
         //...
    }
 
-    public Listing(List<Game> games) {
+    public GameManager(List<Game> games) {
         this.games = new HashMap<Long, Game>();
         for (Game g : games) {
             this.games.put(g.getId(), g);
@@ -37,7 +37,7 @@ public class Listing {
         this.counter = new AtomicLong();
     }
 
-    public Listing(Game[] games) {
+    public GameManager(Game[] games) {
         this(Arrays.asList(games));
     }
 

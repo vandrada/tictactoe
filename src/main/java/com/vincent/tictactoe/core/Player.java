@@ -29,8 +29,8 @@ public class Player {
         return this.name;
     }
 
-    @JsonProperty
+    /*@JsonProperty
     public Game getActiveGame() {
         return this.activeGame;
-    }
+    }*/
 }

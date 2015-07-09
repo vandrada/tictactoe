@@ -14,8 +14,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Game {
     private long id;
-    Player player1;
-    Player player2;
+    private Player player1;
+    private Player player2;
+    private GameBoard board;
 
     public Game() {
         // Jackson deserialization

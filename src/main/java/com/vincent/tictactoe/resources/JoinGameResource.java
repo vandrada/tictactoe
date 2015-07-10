@@ -7,10 +7,7 @@ import com.vincent.tictactoe.core.GameManager;
 import com.vincent.tictactoe.core.GameToken;
 import com.vincent.tictactoe.core.Player;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/join-game")
@@ -18,17 +15,22 @@ import javax.ws.rs.core.MediaType;
 public class JoinGameResource {
     private GameManager gameManager;
     private final String player2Default;
+    private final String player2Mark;
 
-    public JoinGameResource(GameManager gameManager, String player2Default) {
+    public JoinGameResource(GameManager gameManager, String player2Default,
+                            String player2Mark) {
         this.gameManager = gameManager;
         this.player2Default = player2Default;
+        this.player2Mark = player2Mark;
     }
 
     @GET
     @Timed
-    public GameToken joinGame(@QueryParam("id") long id,
-                         @QueryParam("name") Optional<String> name) {
+    @Path("/{id}")
+    public GameToken joinGame(@PathParam("id") long id,
+                              @QueryParam("name") Optional<String> name) {
         Player player = new Player(name.or(player2Default));
+        player.setMark(this.player2Mark);
         Game game = gameManager.updateGame(id, player);
 
         return new GameToken(game, player);

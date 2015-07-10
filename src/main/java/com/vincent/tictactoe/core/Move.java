@@ -3,13 +3,10 @@ package com.vincent.tictactoe.core;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Class to represent a move in tic-tac-toe. It's JSON representation will be
+ * Class to represent a move in tic-tac-toe.
  * {
  *     "game": _
  *     "player": _
- *     "command": "move"
- *     "xPos": _
- *     "yPos": _
  * }
  */
 public class Move {

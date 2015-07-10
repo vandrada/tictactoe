@@ -34,11 +34,13 @@ public class TicTacToeApplication extends Application<TicTacToeConfiguration> {
         final GameManager gameManager = new GameManager(new Game[]{});
 
         final NewGameResource newGame = new NewGameResource(gameManager,
-            configuration.getFirstPlayerDefault());
+            configuration.getFirstPlayerDefault(),
+            configuration.getFirstPlayerMark()) ;
         environment.jersey().register(newGame);
 
         final JoinGameResource joinGame = new JoinGameResource(gameManager,
-            configuration.getSecondPlayerDefault());
+            configuration.getSecondPlayerDefault(),
+            configuration.getSecondPlayerMark());
         environment.jersey().register(joinGame);
 
         final GameListingResource gameListing = new GameListingResource(gameManager);

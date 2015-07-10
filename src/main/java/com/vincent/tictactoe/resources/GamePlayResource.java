@@ -2,6 +2,7 @@ package com.vincent.tictactoe.resources;
 
 import com.codahale.metrics.annotation.Timed;
 import com.vincent.tictactoe.core.Game;
+import com.vincent.tictactoe.core.GameBoard;
 import com.vincent.tictactoe.core.GameManager;
 import com.vincent.tictactoe.core.Move;
 
@@ -22,32 +23,39 @@ public class GamePlayResource {
 
     @GET
     @Timed
-    @Path("/{id}/{token}")
+    @Path("{id}/{token}/move")
     public Move mark(@PathParam("token") String token,
                      @PathParam("game") long id
                      /*@QueryParam("pos") GameBoard.Positions pos*/) {
         Game game = gameManager.getGame(id);
-        if (token.equals(game.getFirstPlayer().getToken())
-            || token.equals(game.getSecondPlayer().getToken())) {
+        if (game.validToken(token)) {
             System.out.println("valid");
             return new Move(game, game.getPlayerByToken(token), null);
         }
-        System.out.println("not valid" + "tokens are" + game.getFirstPlayer()
+        System.out.println("not valid" + "tokens are " + game.getFirstPlayer()
             .getToken() + " and " + game.getSecondPlayer().getToken());
         return null;
-        //gameManager.update(pos, 'X');
+    }
+
+    @GET
+    @Timed
+    @Path("{id}/{token}/board")
+    public GameBoard getBoard(@PathParam("token") String token,
+                              @PathParam("id") long id) {
+        Game game = gameManager.getGame(id);
+        if (game.validToken(token)) {
+            return game.getBoard();
+        }
+        return null;
     }
 
     /**
-     * Returns information about the gameManager such as the current board
+     * Returns information about the Game such as the current board
      * configuration, the players involved, and who's move it is.
-     * @return
      */
     @GET
     @Path("/{id}")
     public Game getInfo(@PathParam("id") long id) {
         return this.gameManager.getGame(id);
     }
-
-    // TODO move
 }

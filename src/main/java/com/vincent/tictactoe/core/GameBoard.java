@@ -1,5 +1,7 @@
 package com.vincent.tictactoe.core;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *  A game board for tic-tac-toe
  *  +---+---+---+
@@ -148,16 +150,34 @@ public class GameBoard {
         }
     }
 
-    // @JsonProperty
-    // public String getBoard() {
-    //     StringBuilder sb = new StringBuilder();
-    //     sb.append("+---+---+---+");
-    //     for (int i = 0; i < 3; i++) {
-    //         sb.append("+---+---+---+");
-    //         sb.append(String.format("| %d| %d| %d|\n", board[i][0], board[i][1],
-    //             board[i][2]));
-    //     }
+    /*
+     * Pretty printing the board
+     */
+    private String getEntry(int x, int y) {
+        if (board[x][y] == EMPTY) {
+            return "*";
+        } else {
+            return Character.toString(board[x][y]);
+        }
+    }
 
-    //     return sb.toString();
-    // }
+    // TODO ugly and not consistent!
+    @JsonProperty
+    public String firstRow() {
+        return String.format("%s | %s | %s", getEntry(0, 0), getEntry(0, 1),
+            getEntry(0, 2));
+    }
+
+    @JsonProperty
+    public String secondRow() {
+        return String.format("%s | %s | %s", getEntry(1, 0), getEntry(1, 1),
+            getEntry(1, 2)) + System.getProperty("line.separator");
+    }
+
+    @JsonProperty
+    public String thirdRow() {
+        return String.format("%s | %s | %s", getEntry(2, 0), getEntry(2, 1),
+            getEntry(2, 2));
+    }
+
 }

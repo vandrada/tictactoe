@@ -18,16 +18,20 @@ import javax.ws.rs.core.MediaType;
 public class NewGameResource {
     private final GameManager gameManager;
     private final String player1Default;
+    private final String player1Mark;
 
-    public NewGameResource(GameManager gameManager, String player1Default) {
+    public NewGameResource(GameManager gameManager, String player1Default,
+                           String player1Mark) {
         this.gameManager = gameManager;
         this.player1Default = player1Default;
+        this.player1Mark = player1Mark;
     }
 
     @GET
     @Timed
     public GameToken newGame(@QueryParam("name") Optional<String> player1) {
         Player player = new Player(player1.or(player1Default));
+        player.setMark(this.player1Mark);
         Game game = gameManager.createGame(player);
         GameToken gameToken = new GameToken(game, player);
 

@@ -1,5 +1,6 @@
 package com.vincent.tictactoe.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -44,10 +45,10 @@ public class Game {
         return null;
     }
 
-    // @JsonProperty
-    // public GameBoard getBoard() {
-    //     return this.board;
-    // }
+    public boolean validToken(String token) {
+        return getPlayerByToken(token) != null;
+
+    }
 
     @JsonProperty
     public long getId() {
@@ -67,5 +68,10 @@ public class Game {
     @JsonProperty
     public boolean joinable() {
         return this.player1 == null || this.player2 == null;
+    }
+
+    @JsonIgnore
+    public GameBoard getBoard() {
+        return this.board;
     }
 }

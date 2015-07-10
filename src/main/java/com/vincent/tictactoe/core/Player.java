@@ -16,7 +16,9 @@ public class Player {
     private String name;
     // a players active game
     private Game activeGame;
-
+    // the mark that a player places on the board
+    private String mark;
+    // the players token that is used for validation
     private String token;
 
     public Player() {
@@ -31,6 +33,10 @@ public class Player {
         this.token = token;
     }
 
+    public void setMark(String mark) {
+        this.mark = mark;
+    }
+
     @JsonIgnore
     // the token should only be shown when a game is created or when a game
     // is joined
@@ -41,5 +47,10 @@ public class Player {
     @JsonProperty
     public String getName() {
         return this.name;
+    }
+
+    @JsonProperty
+    public String getMark() {
+        return this.mark;
     }
 }

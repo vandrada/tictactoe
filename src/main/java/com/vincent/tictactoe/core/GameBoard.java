@@ -1,7 +1,5 @@
 package com.vincent.tictactoe.core;
 
-import java.util.Arrays;
-
 /**
  *  A game board for tic-tac-toe
  *  +---+---+---+
@@ -150,7 +148,16 @@ public class GameBoard {
         }
     }
 
-    public String toString() {
-        return Arrays.deepToString(this.board);
-    }
+    // @JsonProperty
+    // public String getBoard() {
+    //     StringBuilder sb = new StringBuilder();
+    //     sb.append("+---+---+---+");
+    //     for (int i = 0; i < 3; i++) {
+    //         sb.append("+---+---+---+");
+    //         sb.append(String.format("| %d| %d| %d|\n", board[i][0], board[i][1],
+    //             board[i][2]));
+    //     }
+
+    //     return sb.toString();
+    // }
 }

@@ -13,21 +13,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * }
  */
 public class Move {
-
     private Game game;
     private Player player;
-    private int xPos;
-    private int yPos;
+    private GameBoard.Positions pos;
 
     public Move() {
         // Jackson deserialization
     }
 
-    public Move(Game game, Player player, int xPos, int yPos) {
+    public Move(Game game, Player player, GameBoard.Positions pos) {
         this.game = game;
         this.player = player;
-        this.xPos = xPos;
-        this.yPos = yPos;
+        this.pos = pos;
     }
 
     @JsonProperty
@@ -41,12 +38,7 @@ public class Move {
     }
 
     @JsonProperty
-    public int getXPos() {
-        return this.xPos;
-    }
-
-    @JsonProperty
-    public int getYPos() {
-        return this.yPos;
+    public GameBoard.Positions getPos() {
+        return this.pos;
     }
 }

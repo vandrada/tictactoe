@@ -26,11 +26,28 @@ public class Game {
         this.id = id;
         this.player1 = player1;
         this.player2 = player2;
+        this.board = new GameBoard();
     }
 
     public void update(GameBoard.Positions pos, char mark) {
         this.board.mark(pos, mark);
     }
+
+    public Player getPlayerByToken(String token) {
+        if (token.equals(player1.getToken())) {
+            return player1;
+        }
+        if (token.equals(player2.getToken())) {
+            return player2;
+        }
+
+        return null;
+    }
+
+    // @JsonProperty
+    // public GameBoard getBoard() {
+    //     return this.board;
+    // }
 
     @JsonProperty
     public long getId() {

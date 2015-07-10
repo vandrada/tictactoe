@@ -14,3 +14,6 @@ Candidate project for Main Street Hub
 - `random-game<?name={name}>`: joins a random game with the name `name` **TODO**
 
 ### Playing Tic-Tac-Toe
+
+## TODO
+- remove nulls

@@ -73,4 +73,8 @@ public class GameManager {
     public Game[] getGames() {
         return this.games.values().toArray(new Game[this.games.size()]);
     }
+
+    public Game getGame(long id) {
+        return this.games.get(id);
+    }
 }

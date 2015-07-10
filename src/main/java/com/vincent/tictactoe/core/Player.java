@@ -1,5 +1,6 @@
 package com.vincent.tictactoe.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -28,6 +29,13 @@ public class Player {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    @JsonIgnore
+    // the token should only be shown when a game is created or when a game
+    // is joined
+    public String getToken() {
+        return this.token;
     }
 
     @JsonProperty

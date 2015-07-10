@@ -16,13 +16,13 @@ public class GameToken {
         this.game = game;
         this.player = player;
         this.tokenizer = new Tokenizer(player);
-        this.token = this.getToken();
+        this.token = this.tokenizer.getToken();
         this.player.setToken(token);
     }
 
     @JsonProperty
     public String getToken() {
-        return this.tokenizer.getToken();
+        return this.token;
     }
 
     @JsonProperty

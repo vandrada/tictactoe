@@ -8,38 +8,45 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * {
  *     "game": _id
  *     "players": {
- *         "player1": _
- *         "player2": _
+ *         "playerOne": _
+ *         "playerTwo": _
  *     }
  * }
  */
 public class Game {
     private long id;
-    private Player player1;
-    private Player player2;
+    private Player currentPlayer;   // the player whose turn it is
+    private Player playerOne;
+    private Player playerTwo;
     private GameBoard board;
 
     public Game() {
         // Jackson deserialization
     }
 
-    public Game(long id, Player player1, Player player2) {
+    public Game(long id, Player player1, Player playerTwo) {
         this.id = id;
-        this.player1 = player1;
-        this.player2 = player2;
+        this.playerOne = player1;
+        this.playerTwo = playerTwo;
         this.board = new GameBoard();
+        // TODO randomize?
+        this.currentPlayer = player1;
     }
 
-    public void update(Position pos, char mark) {
-        this.board.mark(pos, mark);
+    public void update(Position pos, String mark) {
+        // Don't let players set a mark before someone has joined
+        if (!this.joinable()) {
+            this.board.mark(pos, mark);
+        }
+        currentPlayer = otherPlayer();
     }
 
     public Player getPlayerByToken(String token) {
-        if (token.equals(player1.getToken())) {
-            return player1;
+        if (token.equals(playerOne.getToken())) {
+            return playerOne;
         }
-        if (token.equals(player2.getToken())) {
-            return player2;
+        if (token.equals(playerTwo.getToken())) {
+            return playerTwo;
         }
 
         return null;
@@ -50,6 +57,14 @@ public class Game {
 
     }
 
+    public boolean positionEmpty(Position pos) {
+        return this.board.isEmpty(pos);
+    }
+
+    public boolean isCurrentPlayer(Player player) {
+        return player.getToken().equals(this.currentPlayer.getToken());
+    }
+
     @JsonProperty
     public long getId() {
         return this.id;
@@ -57,21 +72,35 @@ public class Game {
 
     @JsonProperty
     public Player getFirstPlayer() {
-        return this.player1;
+        return this.playerOne;
     }
 
     @JsonProperty
     public Player getSecondPlayer() {
-        return this.player2;
+        return this.playerTwo;
     }
 
     @JsonProperty
     public boolean joinable() {
-        return this.player1 == null || this.player2 == null;
+        return this.playerOne == null || this.playerTwo == null;
+    }
+
+    @JsonProperty
+    public Player getCurrentPlayer() {
+        return this.currentPlayer;
     }
 
     @JsonIgnore
     public GameBoard getBoard() {
         return this.board;
+    }
+
+    @JsonIgnore
+    public Player otherPlayer() {
+        if (this.currentPlayer == this.getFirstPlayer()) {
+            return playerTwo;
+        } else {
+            return playerOne;
+        }
     }
 }

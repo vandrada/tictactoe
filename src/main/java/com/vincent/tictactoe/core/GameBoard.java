@@ -2,23 +2,31 @@ package com.vincent.tictactoe.core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Arrays;
+
 /**
- *  A game board for tic-tac-toe
- *  +---+---+---+
- *  | 0 | 1 | 2 |
- *  +---+---+---+
- *  | 3 | 4 | 5 |
- *  +---+---+---+
- *  | 6 | 7 | 8 |
- *  +---+---+---+
+ * A game board for tic-tac-toe represented as a 2-D array of Strings
+ * +----+----+----+
+ * | "" | "" | "" |
+ * +----+----+----+
+ * | "" | "" | "" |
+ * +----+----+----+
+ * | "" | "" | "" |
+ * +----+----+----+
+ * The public methods check if there's a winner, check if all the positions
+ * are full, mark a position, and check if a position is open.
  */
 public class GameBoard {
     // Java's default char value
-    private static char EMPTY = '\u0000';
-    char[][] board;
+    private static String EMPTY = "";
+    String[][] board;
 
     public GameBoard() {
-        board = new char[3][3];
+        board = new String[3][3];
+        // fill all entries to the default of EMPTY or ""
+        for (String[] row : board) {
+            Arrays.fill(row, EMPTY);
+        }
     }
 
     /**
@@ -44,14 +52,28 @@ public class GameBoard {
 
     /**
      * Marks the board at the specified position
-     * @param pos the position on the board to mark
+     * @param pos  the position on the board to mark
      * @param mark the mark to place
      */
-    public void mark(Position pos, char mark) {
-        if (board[pos.getX()][pos.getY()] == EMPTY) {
+    public void mark(Position pos, String mark) {
+        if (board[pos.getX()][pos.getY()].equals(EMPTY)) {
             board[pos.getX()][pos.getY()] = mark;
         }
     }
+
+    public boolean isEmpty(Position pos) {
+        return board[pos.getX()][pos.getY()].equals(EMPTY);
+    }
+
+    // TODO ugly and not consistent!
+    @JsonProperty
+    public String[][] getBoard() {
+        return this.board;
+    }
+
+    /*
+     * Private Functions
+     */
 
     /**
      * Checks if three entries are the same
@@ -60,12 +82,12 @@ public class GameBoard {
      * @param c3 the third entry to check
      * @return true of c1, c2, and c3 are equal; false otherwise
      */
-    private boolean checkEntries(char c1, char c2, char c3) {
-        return (c1 != EMPTY && (c1 == c2 && c2 == c3));
+    private boolean checkEntries(String c1, String c2, String c3) {
+        return ((!c1.equals(EMPTY)) && (c1.equals(c2) && c2.equals(c3)));
     }
 
     /**
-     * Checks a column to see if all entries are the same
+     * Checks each column to see if all entries are the same
      * @return true if they are all the same; false otherwise
      */
     private boolean checkVertical() {
@@ -100,21 +122,13 @@ public class GameBoard {
             checkEntries(board[2][0], board[1][1], board[2][0]);
     }
 
-    /*
-     * Pretty printing the board
-     */
+    // TODO pretty print board
     private String getEntry(Position pos) {
         if (board[pos.getX()][pos.getY()] == EMPTY) {
             Integer p = pos.ordinal();
             return p.toString();
         } else {
-            return Character.toString(board[pos.getX()][pos.getY()]);
+            return board[pos.getX()][pos.getY()];
         }
-    }
-
-    // TODO ugly and not consistent!
-    @JsonProperty
-    public char[][] getBoard() {
-        return this.board;
     }
 }

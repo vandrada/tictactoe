@@ -1,15 +1,9 @@
 package com.vincent.tictactoe.resources;
 
 import com.codahale.metrics.annotation.Timed;
-import com.vincent.tictactoe.core.Game;
-import com.vincent.tictactoe.core.GameBoard;
-import com.vincent.tictactoe.core.GameManager;
-import com.vincent.tictactoe.core.Move;
+import com.vincent.tictactoe.core.*;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/play")
@@ -21,20 +15,17 @@ public class GamePlayResource {
         this.gameManager = listing;
     }
 
-    // TODO finish
     @GET
     @Timed
     @Path("{id}/{token}/move")
     public Move mark(@PathParam("token") String token,
-                     @PathParam("game") long id
-                     /*@QueryParam("pos") GameBoard.Positions pos*/) {
+                     @PathParam("game") long id,
+                     @QueryParam("pos") int pos) {
         Game game = gameManager.getGame(id);
         if (game.validToken(token)) {
-            System.out.println("valid");
-            return new Move(game, game.getPlayerByToken(token), null);
+            return new Move(game, game.getPlayerByToken(token),
+                            Position.values()[pos]);
         }
-        System.out.println("not valid" + "tokens are " + game.getFirstPlayer()
-            .getToken() + " and " + game.getSecondPlayer().getToken());
         return null;
     }
 

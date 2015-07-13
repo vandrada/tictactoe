@@ -9,24 +9,23 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * A listing of available games
- * {
- *  "games":{
- *          {
- *              game1,
- *              game2,
- *              ...
- *          }
- *      }
- *  }
+ * This Game manages multiple games and provides the only means to adding new
+ * games, removing a game, and update a game. It's JSON representation is
+ * just an array of games similar to:
+ * {"games":[
+ *          {game1},
+ *          {game2},
+ *           ...
+ *          ]
+ * }
  */
 public class GameManager {
     private Map<Long, Game> games;
     private AtomicLong counter;
 
     public GameManager() {
-        //...
-   }
+
+    }
 
     public GameManager(List<Game> games) {
         this.games = new HashMap<Long, Game>();

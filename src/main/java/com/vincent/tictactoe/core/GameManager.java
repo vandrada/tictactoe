@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * This Game manages multiple games and provides the only means to adding new
- * games, removing a game, and update a game. It's JSON representation is
+ * games, removing a game, and addSecondPlayer a game. It's JSON representation is
  * just an array of games similar to:
  * {"games":[
  *          {game1},
@@ -52,6 +52,7 @@ public class GameManager {
                     game.getFirstPlayer(),
                     player));
                 // since `put` returns the *previous* value...
+                this.games.get(id).determineGameStatus();
                 return this.games.get(id);
             }
             // TODO handle error!

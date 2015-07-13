@@ -18,7 +18,7 @@ import java.util.Arrays;
  */
 public class GameBoard {
     // Java's default char value
-    private static String EMPTY = "";
+    private static String EMPTY = " ";
     String[][] board;
 
     public GameBoard() {
@@ -43,7 +43,7 @@ public class GameBoard {
      */
     public boolean full() {
         for (Position pos : Position.values()) {
-            if (board[pos.getX()][pos.getY()] == EMPTY) {
+            if (board[pos.getX()][pos.getY()].equals(EMPTY)) {
                 return false;
             }
         }
@@ -124,7 +124,7 @@ public class GameBoard {
 
     // TODO pretty print board
     private String getEntry(Position pos) {
-        if (board[pos.getX()][pos.getY()] == EMPTY) {
+        if (board[pos.getX()][pos.getY()].equals(EMPTY)) {
             Integer p = pos.ordinal();
             return p.toString();
         } else {

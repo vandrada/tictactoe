@@ -1,20 +1,21 @@
 package com.vincent.tictactoe.core;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Class to represent a move in tic-tac-toe. The JSON representation is as
  * follows:
  * {
- *     "player": _
- *     "pos":    _
- *     "valid:   _
+ *     "player":  _
+ *     "pos":     _
+ *     "valid":   _
+ *     "board":   _
  * }
  * - `player` is the Player who made the move
  * - `pos`: is the position that was filled converted to the Position enum, i.e
  *   `BOTTOM_RIGHT`
  * - `valid` is whether or not the move was valid.
+ * - `board` the board after the move
  *
  * Actual marking of the board is done in the constructor since a Move is
  * both immutable and ephemeral.
@@ -34,16 +35,17 @@ public class Move {
         this.player = player;
         this.pos = pos;
 
-        // Execute the actual move on the game board
+        // Execute the actual move on the game board, but before, determine
+        // if it's a valid move
         if (game.isCurrentPlayer(player) && this.game.positionEmpty(pos)) {
             this.valid = true;
-            this.game.update(pos, player.getMark());
+            this.game.addSecondPlayer(pos, player.getMark());
         } else {
             this.valid = false;
         }
     }
 
-    @JsonIgnore
+    @JsonProperty
     public Game getGame() {
         return this.game;
     }
@@ -61,5 +63,10 @@ public class Move {
     @JsonProperty
     public boolean getValid() {
         return this.valid;
+    }
+
+    @JsonProperty
+    public GameBoard getBoard() {
+        return this.game.getBoard();
     }
 }

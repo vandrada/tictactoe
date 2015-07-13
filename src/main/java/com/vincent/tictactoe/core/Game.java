@@ -3,6 +3,8 @@ package com.vincent.tictactoe.core;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.vincent.tictactoe.core.status.*;
+
 /**
  * A game of tic-tac-toe
  * {
@@ -19,26 +21,28 @@ public class Game {
     private Player playerOne;
     private Player playerTwo;
     private GameBoard board;
+    private GameStatus status;
 
     public Game() {
         // Jackson deserialization
     }
 
-    public Game(long id, Player player1, Player playerTwo) {
+    public Game(long id, Player playerOne, Player playerTwo) {
         this.id = id;
-        this.playerOne = player1;
+        this.playerOne = playerOne;
         this.playerTwo = playerTwo;
+        this.currentPlayer = playerOne;   // TODO randomize?
         this.board = new GameBoard();
-        // TODO randomize?
-        this.currentPlayer = player1;
+        this.status = new Available();
     }
 
-    public void update(Position pos, String mark) {
+    public void addSecondPlayer(Position pos, String mark) {
         // Don't let players set a mark before someone has joined
         if (!this.joinable()) {
             this.board.mark(pos, mark);
         }
         currentPlayer = otherPlayer();
+        this.determineGameStatus();
     }
 
     public Player getPlayerByToken(String token) {
@@ -54,7 +58,6 @@ public class Game {
 
     public boolean validToken(String token) {
         return getPlayerByToken(token) != null;
-
     }
 
     public boolean positionEmpty(Position pos) {
@@ -80,9 +83,28 @@ public class Game {
         return this.playerTwo;
     }
 
-    @JsonProperty
+    @JsonIgnore
     public boolean joinable() {
         return this.playerOne == null || this.playerTwo == null;
+    }
+
+    @JsonProperty
+    public GameStatus getGameStatus() {
+        return this.status;
+    }
+
+    @JsonProperty
+    public void determineGameStatus() {
+        if (this.joinable()) {
+            this.status = new Available();
+        } else if (this.playerTwo != null && this.playerOne != null) {
+            this.status = new Active();
+        } else if (this.board.check() || !this.board.full()) {
+            // TODO determine winner
+            this.status = new Over(playerOne);
+        } else {
+            this.status = new Tie();
+        }
     }
 
     @JsonProperty

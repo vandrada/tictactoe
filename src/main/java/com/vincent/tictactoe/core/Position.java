@@ -61,10 +61,8 @@ public enum Position {
         public int getY() {
             return 1;
         }
-
-
-
-    }, CENTER_RIGHT {
+    },
+    CENTER_RIGHT {
         @Override
         public int getX() {
             return 1;
@@ -85,7 +83,8 @@ public enum Position {
         public int getY() {
             return 0;
         }
-    }, BOTTOM_CENTER {
+    },
+    BOTTOM_CENTER {
         @Override
         public int getX() {
             return 2;
@@ -95,7 +94,8 @@ public enum Position {
         public int getY() {
             return 1;
         }
-    }, BOTTOM_RIGHT {
+    },
+    BOTTOM_RIGHT {
         @Override
         public int getX() {
             return 2;

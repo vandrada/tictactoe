@@ -12,13 +12,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Move {
     private Game game;
     private Player player;
-    private GameBoard.Positions pos;
+    private Position pos;
 
     public Move() {
         // Jackson deserialization
     }
 
-    public Move(Game game, Player player, GameBoard.Positions pos) {
+    public Move(Game game, Player player, Position pos) {
         this.game = game;
         this.player = player;
         this.pos = pos;
@@ -35,7 +35,7 @@ public class Move {
     }
 
     @JsonProperty
-    public GameBoard.Positions getPos() {
+    public Position getPos() {
         return this.pos;
     }
 }

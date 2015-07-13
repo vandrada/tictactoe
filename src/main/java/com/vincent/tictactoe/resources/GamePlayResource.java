@@ -21,6 +21,7 @@ public class GamePlayResource {
         this.gameManager = listing;
     }
 
+    // TODO finish
     @GET
     @Timed
     @Path("{id}/{token}/move")

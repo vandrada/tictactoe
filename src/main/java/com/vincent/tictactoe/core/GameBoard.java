@@ -34,11 +34,9 @@ public class GameBoard {
      * @return true if the board is full; false otherwise
      */
     public boolean full() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i][j] == EMPTY) {
-                    return false;
-                }
+        for (Position pos : Position.values()) {
+            if (board[pos.getX()][pos.getY()] == EMPTY) {
+                return false;
             }
         }
         return true;
@@ -49,46 +47,10 @@ public class GameBoard {
      * @param pos the position on the board to mark
      * @param mark the mark to place
      */
-    public void mark(Positions pos, char mark) {
-        switch (pos) {
-            case TOP_LEFT:
-                updateBoard(mark, 0, 0);
-                break;
-            case TOP_CENTER:
-                updateBoard(mark, 0, 1);
-                break;
-            case TOP_RIGHT:
-                updateBoard(mark, 0, 2);
-                break;
-            case CENTER_LEFT:
-                updateBoard(mark, 1, 0);
-                break;
-            case CENTER:
-                updateBoard(mark, 1, 1);
-                break;
-            case CENTER_RIGHT:
-                updateBoard(mark, 1, 2);
-                break;
-            case BOTTOM_LEFT:
-                updateBoard(mark, 2, 0);
-                break;
-            case BOTTOM_CENTER:
-                updateBoard(mark, 2, 1);
-                break;
-            case BOTTOM_RIGHT:
-                updateBoard(mark, 2, 2);
-                break;
+    public void mark(Position pos, char mark) {
+        if (board[pos.getX()][pos.getY()] == EMPTY) {
+            board[pos.getX()][pos.getY()] = mark;
         }
-    }
-
-    /**
-     * Positions on a 3 x 3 board, just to improve readability and avoid
-     * off-by-one errors
-     */
-    public enum Positions {
-        TOP_LEFT, TOP_CENTER, TOP_RIGHT,
-        CENTER_LEFT, CENTER, CENTER_RIGHT,
-        BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT
     }
 
     /**
@@ -138,46 +100,21 @@ public class GameBoard {
             checkEntries(board[2][0], board[1][1], board[2][0]);
     }
 
-    /**
-     * Updates the board by placing a mark on the board
-     * @param mark the type of mark to put
-     * @param xpos the x position of the board
-     * @param ypos the y position of the board
-     */
-    private void updateBoard(char mark, int xpos, int ypos) {
-        if (board[xpos][ypos] == EMPTY) {
-            board[xpos][ypos] = mark;
-        }
-    }
-
     /*
      * Pretty printing the board
      */
-    private String getEntry(int x, int y) {
-        if (board[x][y] == EMPTY) {
-            return "*";
+    private String getEntry(Position pos) {
+        if (board[pos.getX()][pos.getY()] == EMPTY) {
+            Integer p = pos.ordinal();
+            return p.toString();
         } else {
-            return Character.toString(board[x][y]);
+            return Character.toString(board[pos.getX()][pos.getY()]);
         }
     }
 
     // TODO ugly and not consistent!
     @JsonProperty
-    public String firstRow() {
-        return String.format("%s | %s | %s", getEntry(0, 0), getEntry(0, 1),
-            getEntry(0, 2));
+    public char[][] getBoard() {
+        return this.board;
     }
-
-    @JsonProperty
-    public String secondRow() {
-        return String.format("%s | %s | %s", getEntry(1, 0), getEntry(1, 1),
-            getEntry(1, 2)) + System.getProperty("line.separator");
-    }
-
-    @JsonProperty
-    public String thirdRow() {
-        return String.format("%s | %s | %s", getEntry(2, 0), getEntry(2, 1),
-            getEntry(2, 2));
-    }
-
 }

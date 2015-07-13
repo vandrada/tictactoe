@@ -30,7 +30,7 @@ public class Game {
         this.board = new GameBoard();
     }
 
-    public void update(GameBoard.Positions pos, char mark) {
+    public void update(Position pos, char mark) {
         this.board.mark(pos, mark);
     }
 

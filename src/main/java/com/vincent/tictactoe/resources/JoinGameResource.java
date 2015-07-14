@@ -46,8 +46,8 @@ public class JoinGameResource {
 
         Random rand = new Random();
         long randomId = rand.nextInt(gameManager.getGames().length);
-        Game game = gameManager.getGame(randomId);
         gameManager.addSecondPlayer(randomId, player);
+        Game game = gameManager.getGame(randomId);
 
         return new GameToken(game, player);
     }

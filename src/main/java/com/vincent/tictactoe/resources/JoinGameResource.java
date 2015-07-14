@@ -9,6 +9,7 @@ import com.vincent.tictactoe.core.Player;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Random;
 
 @Path("/join-game")
 @Produces(MediaType.APPLICATION_JSON)
@@ -32,6 +33,21 @@ public class JoinGameResource {
         Player player = new Player(name.or(player2Default));
         player.setMark(this.player2Mark);
         Game game = gameManager.addSecondPlayer(id, player);
+
+        return new GameToken(game, player);
+    }
+
+    @GET
+    @Timed
+    @Path("/random")
+    public GameToken joinRandomGame(@QueryParam("name") Optional<String> name) {
+        Player player = new Player(name.or(player2Default));
+        player.setMark(this.player2Mark);
+
+        Random rand = new Random();
+        long randomId = rand.nextInt(gameManager.getGames().length);
+        Game game = gameManager.getGame(randomId);
+        gameManager.addSecondPlayer(randomId, player);
 
         return new GameToken(game, player);
     }

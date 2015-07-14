@@ -17,7 +17,7 @@ public class GamePlayResource {
 
     @GET
     @Timed
-    @Path("{id}/{token}/move")
+    @Path("/{id}/{token}/move")
     public Move mark(@PathParam("token") String token,
                      @PathParam("game") long id,
                      @QueryParam("pos") int pos) {
@@ -30,29 +30,17 @@ public class GamePlayResource {
         return null;
     }
 
-    @GET
-    @Timed
-    @Path("{id}/{token}/board")
-    public GameBoard getBoard(@PathParam("token") String token,
-                              @PathParam("id") long id) {
-        Game game = gameManager.getGame(id);
-        if (game.validToken(token)) {
-            return game.getBoard();
-        }
-        return null;
-    }
-
     /**
      * Returns information about the Game such as the current board
      * configuration, the players involved, and who's move it is.
      */
     @GET
     @Path("/{id}/{token}")
-    public Game getInfo(@PathParam("id") long id,
+    public GameInfo getInfo(@PathParam("id") long id,
                         @PathParam("token") String token) {
         Game game = gameManager.getGame(id);
         if (game.validToken(token)) {
-            return this.gameManager.getGame(id);
+            return new GameInfo(game);
         }
         return null;
     }

@@ -8,7 +8,7 @@ import com.vincent.tictactoe.core.status.*;
 /**
  * A game of tic-tac-toe
  * {
- *     "game": _id
+ *     "game": _
  *     "players": {
  *         "playerOne": _
  *         "playerTwo": _
@@ -68,8 +68,28 @@ public class Game {
         return player.getToken().equals(this.currentPlayer.getToken());
     }
 
+    @JsonIgnore
     public boolean isActive() {
         return this.status.equals(new Active());
+    }
+
+    @JsonIgnore
+    public Player otherPlayer() {
+        if (this.currentPlayer == this.getFirstPlayer()) {
+            return playerTwo;
+        } else {
+            return playerOne;
+        }
+    }
+
+    @JsonIgnore
+    public boolean joinable() {
+        return this.playerOne == null || this.playerTwo == null;
+    }
+
+    @JsonIgnore
+    public GameBoard getBoard() {
+        return this.board;
     }
 
     @JsonProperty
@@ -85,11 +105,6 @@ public class Game {
     @JsonProperty
     public Player getSecondPlayer() {
         return this.playerTwo;
-    }
-
-    @JsonIgnore
-    public boolean joinable() {
-        return this.playerOne == null || this.playerTwo == null;
     }
 
     @JsonProperty
@@ -113,19 +128,5 @@ public class Game {
     @JsonProperty
     public Player getCurrentPlayer() {
         return this.currentPlayer;
-    }
-
-    @JsonIgnore
-    public GameBoard getBoard() {
-        return this.board;
-    }
-
-    @JsonIgnore
-    public Player otherPlayer() {
-        if (this.currentPlayer == this.getFirstPlayer()) {
-            return playerTwo;
-        } else {
-            return playerOne;
-        }
     }
 }

@@ -37,6 +37,8 @@ public class GameBoard {
         return (checkHorizontal() || checkVertical() || checkDiagonal());
     }
 
+    // TODO determine winner
+
     /**
      * Checks if the board is full and no new marks can be placed
      * @return true if the board is full; false otherwise
@@ -61,6 +63,11 @@ public class GameBoard {
         }
     }
 
+    /**
+     * Checks if a Position is empty
+     * @param pos the position to check
+     * @return true if the position is empty; false otherwise
+     */
     public boolean isEmpty(Position pos) {
         return board[pos.getX()][pos.getY()].equals(EMPTY);
     }

@@ -12,4 +12,9 @@ public class Available extends GameStatus {
     String getMessage() {
         return "Game is available to join";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return o == this || (o instanceof Available);
+    }
 }

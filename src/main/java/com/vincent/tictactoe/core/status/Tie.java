@@ -13,4 +13,9 @@ public class Tie extends GameStatus {
     String getMessage() {
         return "The game is a tie";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return o != null && (o instanceof GameStatus);
+    }
 }

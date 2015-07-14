@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * This Game manages multiple games and provides the only means to adding new
- * games, removing a game, and addSecondPlayer a game. It's JSON representation is
+ * games, removing a game, and updateBoard a game. It's JSON representation is
  * just an array of games similar to:
  * {"games":[
  *          {game1},
@@ -24,7 +24,8 @@ public class GameManager {
     private AtomicLong counter;
 
     public GameManager() {
-
+        this.games = new HashMap<>();
+        this.counter = new AtomicLong();
     }
 
     public GameManager(List<Game> games) {
@@ -40,11 +41,18 @@ public class GameManager {
         this(Arrays.asList(games));
     }
 
+    /**
+     * Creates a new Game and adds it to the manager. Assigns the Game an ID
+     * @param firstPlayer the first player of the game
+     * @return a newly created Game
+     */
     public Game createGame(Player firstPlayer) {
-        return new Game(this.counter.getAndIncrement(), firstPlayer, null);
+        Game game = new Game(this.counter.getAndIncrement(), firstPlayer, null);
+        this.games.put(game.getId(), game);
+        return game;
     }
 
-    public Game updateGame(long id, Player player) {
+    public Game addSecondPlayer(long id, Player player) {
         if (this.games.containsKey(id)) {
             Game game = this.games.get(id);
             if (game.joinable()) {
@@ -59,10 +67,6 @@ public class GameManager {
         }
 
         return null;
-    }
-
-    public void addGame(Game game) {
-        this.games.put(game.getId(), game);
     }
 
     public void removeGame(Game game) {

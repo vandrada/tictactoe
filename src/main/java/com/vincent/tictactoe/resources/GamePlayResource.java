@@ -26,6 +26,7 @@ public class GamePlayResource {
             return new Move(game, game.getPlayerByToken(token),
                             Position.values()[pos]);
         }
+        // TODO return something else
         return null;
     }
 

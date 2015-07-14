@@ -12,4 +12,9 @@ public class Active extends GameStatus {
     public String getMessage() {
         return "Game is currently active";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return o == this || (o instanceof Active);
+    }
 }

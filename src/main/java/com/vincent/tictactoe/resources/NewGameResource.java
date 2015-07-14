@@ -33,9 +33,6 @@ public class NewGameResource {
         Player player = new Player(player1.or(player1Default));
         player.setMark(this.player1Mark);
         Game game = gameManager.createGame(player);
-        GameToken gameToken = new GameToken(game, player);
-
-        this.gameManager.addGame(game);
-        return gameToken;
+        return new GameToken(game, player);
     }
 }

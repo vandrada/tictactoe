@@ -1,6 +1,5 @@
 package com.vincent.tictactoe;
 
-import com.vincent.tictactoe.core.Game;
 import com.vincent.tictactoe.core.GameManager;
 import com.vincent.tictactoe.resources.GameListingResource;
 import com.vincent.tictactoe.resources.GamePlayResource;
@@ -31,7 +30,7 @@ public class TicTacToeApplication extends Application<TicTacToeConfiguration> {
         // Acts as a global variable or singleton for the entire application
         // Contains a listing of all games and provides the mechanism to add
         // games, remove games, and join a game
-        final GameManager gameManager = new GameManager(new Game[]{});
+        final GameManager gameManager = new GameManager();
 
         final NewGameResource newGame = new NewGameResource(gameManager,
             configuration.getFirstPlayerDefault(),

@@ -33,10 +33,10 @@ public class Game {
         this.playerTwo = playerTwo;
         this.currentPlayer = playerOne;   // TODO randomize?
         this.board = new GameBoard();
-        this.status = new Available();
+        determineGameStatus();
     }
 
-    public void addSecondPlayer(Position pos, String mark) {
+    public void updateBoard(Position pos, String mark) {
         // Don't let players set a mark before someone has joined
         if (!this.joinable()) {
             this.board.mark(pos, mark);
@@ -97,13 +97,14 @@ public class Game {
     public void determineGameStatus() {
         if (this.joinable()) {
             this.status = new Available();
-        } else if (this.playerTwo != null && this.playerOne != null) {
-            this.status = new Active();
-        } else if (this.board.check() || !this.board.full()) {
-            // TODO determine winner
-            this.status = new Over(playerOne);
-        } else {
+        } else if (this.board.full()) {
             this.status = new Tie();
+        } else if (this.board.check()) {
+            // TODO determine winner
+            // this.status = new Over(board.getWinner());
+            this.status = new GameWin();
+        } else {
+            this.status = new Active();
         }
     }
 

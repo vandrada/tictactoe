@@ -39,7 +39,7 @@ public class Move {
         // if it's a valid move
         if (game.isCurrentPlayer(player) && this.game.positionEmpty(pos)) {
             this.valid = true;
-            this.game.addSecondPlayer(pos, player.getMark());
+            this.game.updateBoard(pos, player.getMark());
         } else {
             this.valid = false;
         }

@@ -12,13 +12,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 
 public class Player {
-    // a players screen-name
     private String name;
-    // a players active game
     private Game activeGame;
-    // the mark that a player places on the board
     private String mark;
-    // the players token that is used for validation
     private String token;
 
     public Player() {

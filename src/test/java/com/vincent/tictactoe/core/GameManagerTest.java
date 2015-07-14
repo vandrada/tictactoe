@@ -48,4 +48,9 @@ public class GameManagerTest {
     public void noIdReturnsNull() {
         assertNull("Invalid ID should return null", manager.getGame(1232132));
     }
+
+    @Test
+    public void testGetGames() {
+        assertEquals(1, manager.getGames().length);
+    }
 }

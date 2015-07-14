@@ -2,9 +2,7 @@ package com.vincent.tictactoe.core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -26,19 +24,6 @@ public class GameManager {
     public GameManager() {
         this.games = new HashMap<>();
         this.counter = new AtomicLong();
-    }
-
-    public GameManager(List<Game> games) {
-        this.games = new HashMap<Long, Game>();
-        for (Game g : games) {
-            this.games.put(g.getId(), g);
-        }
-        // this counter is responsible for creating games
-        this.counter = new AtomicLong();
-    }
-
-    public GameManager(Game[] games) {
-        this(Arrays.asList(games));
     }
 
     /**

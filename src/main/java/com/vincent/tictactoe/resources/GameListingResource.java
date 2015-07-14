@@ -20,7 +20,6 @@ public class GameListingResource {
     @GET
     @Timed
     public GameManager gameListing(){
-        // TODO funky...
-        return new GameManager(this.gameManager.getGames());
+        return this.gameManager;
     }
 }

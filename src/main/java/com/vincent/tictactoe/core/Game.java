@@ -38,11 +38,11 @@ public class Game {
 
     public void updateBoard(Position pos, String mark) {
         // Don't let players set a mark before someone has joined
-        if (!this.joinable()) {
+        if (this.isActive()) {
             this.board.mark(pos, mark);
+            currentPlayer = otherPlayer();
+            determineGameStatus();
         }
-        currentPlayer = otherPlayer();
-        this.determineGameStatus();
     }
 
     public Player getPlayerByToken(String token) {
@@ -66,6 +66,10 @@ public class Game {
 
     public boolean isCurrentPlayer(Player player) {
         return player.getToken().equals(this.currentPlayer.getToken());
+    }
+
+    public boolean isActive() {
+        return this.status.equals(new Active());
     }
 
     @JsonProperty
@@ -100,8 +104,6 @@ public class Game {
         } else if (this.board.full()) {
             this.status = new Tie();
         } else if (this.board.check()) {
-            // TODO determine winner
-            // this.status = new Over(board.getWinner());
             this.status = new GameWin();
         } else {
             this.status = new Active();

@@ -9,7 +9,7 @@ public class Available extends GameStatus {
 
     @Override
     @JsonProperty
-    String getMessage() {
+    public String getMessage() {
         return "Game is available to join";
     }
 

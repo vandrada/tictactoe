@@ -7,6 +7,7 @@ import com.vincent.tictactoe.core.status.Tie;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -36,6 +37,7 @@ public class GameTest {
         Game game = new Game(0, player1, null);
         assertEquals("Game with one player should be Available",
             new Available(), game.getGameStatus());
+        assertFalse(game.isActive());
     }
 
     /* Active */
@@ -43,6 +45,7 @@ public class GameTest {
     public void statusWithTwoPlayers() {
         assertEquals("Game with two players should be Active",
             new Active(), game.getGameStatus());
+        assertTrue(game.isActive());
     }
 
     /* GameWin */
@@ -54,6 +57,7 @@ public class GameTest {
 
         assertEquals("Game with winning board should be GameWin",
             new GameWin(), game.getGameStatus());
+        assertFalse(game.isActive());
     }
 
     @Test
@@ -64,6 +68,7 @@ public class GameTest {
 
         assertEquals("Game with winning board should be GameWin",
             new GameWin(), game.getGameStatus());
+        assertFalse(game.isActive());
     }
 
     @Test
@@ -74,17 +79,18 @@ public class GameTest {
 
         assertEquals("Game with horizontal win should be GameWin",
             new GameWin(), game.getGameStatus());
-
+        assertFalse(game.isActive());
     }
 
     @Test
     public void gameOverVertical() {
         game.updateBoard(Position.TOP_LEFT, "X");
         game.updateBoard(Position.CENTER_LEFT, "X");
-        game.updateBoard(Position.BOTTOM_RIGHT, "X");
+        game.updateBoard(Position.BOTTOM_LEFT, "X");
 
         assertEquals("Game with vertical win should be GameWin",
             new GameWin(), game.getGameStatus());
+        assertFalse(game.isActive());
     }
 
     /* Tie */
@@ -105,6 +111,7 @@ public class GameTest {
 
         assertEquals("Game with vertical win should be GameWin",
             new Tie(), game.getGameStatus());
+        assertFalse(game.isActive());
     }
 
     /* Board with no winner should be Active */
@@ -117,6 +124,7 @@ public class GameTest {
 
         assertEquals("Game with no winner (yet) should be Active",
             new Active(), game.getGameStatus());
+        assertTrue(game.isActive());
     }
 
     /*

@@ -10,12 +10,12 @@ public class GameWin extends GameStatus {
 
     @Override
     @JsonProperty
-    String getMessage() {
+    public String getMessage() {
         return "The game is over";
     }
 
     @Override
     public boolean equals(Object o) {
-        return o != null && (o instanceof GameStatus);
+        return o != null && (o instanceof GameWin);
     }
 }

@@ -22,7 +22,7 @@ public class GamePlayResource {
                      @PathParam("game") long id,
                      @QueryParam("pos") int pos) {
         Game game = gameManager.getGame(id);
-        if (game.validToken(token)) {
+        if (game.validToken(token) && game.isActive()) {
             return new Move(game, game.getPlayerByToken(token),
                             Position.values()[pos]);
         }
@@ -47,8 +47,13 @@ public class GamePlayResource {
      * configuration, the players involved, and who's move it is.
      */
     @GET
-    @Path("/{id}")
-    public Game getInfo(@PathParam("id") long id) {
-        return this.gameManager.getGame(id);
+    @Path("/{id}/{token}")
+    public Game getInfo(@PathParam("id") long id,
+                        @PathParam("token") String token) {
+        Game game = gameManager.getGame(id);
+        if (game.validToken(token)) {
+            return this.gameManager.getGame(id);
+        }
+        return null;
     }
 }

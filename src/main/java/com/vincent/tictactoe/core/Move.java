@@ -37,7 +37,7 @@ public class Move {
 
         // Execute the actual move on the game board, but before, determine
         // if it's a valid move
-        if (game.isCurrentPlayer(player) && this.game.positionEmpty(pos)) {
+        if (this.game.isCurrentPlayer(player) && this.game.positionEmpty(pos)) {
             this.valid = true;
             this.game.updateBoard(pos, player.getMark());
         } else {

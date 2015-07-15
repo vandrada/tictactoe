@@ -1,3 +1,7 @@
 firstPlayerMark: "X"
 
 secondPlayerMark: "O"
+
+firstPlayerDefault: "Player 1"
+
+secondPlayerDefault: "Player 2"

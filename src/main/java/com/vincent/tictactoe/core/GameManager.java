@@ -48,7 +48,6 @@ public class GameManager {
                 this.games.get(id).determineGameStatus();
                 return this.games.get(id);
             }
-            // TODO handle error!
         }
 
         return null;
@@ -58,12 +57,12 @@ public class GameManager {
         this.games.remove(game.getId());
     }
 
+    public Game getGame(long id) {
+        return this.games.get(id);
+    }
+
     @JsonProperty
     public Game[] getGames() {
         return this.games.values().toArray(new Game[this.games.size()]);
-    }
-
-    public Game getGame(long id) {
-        return this.games.get(id);
     }
 }

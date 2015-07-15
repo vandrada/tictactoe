@@ -37,8 +37,6 @@ public class GameBoard {
         return (checkHorizontal() || checkVertical() || checkDiagonal());
     }
 
-    // TODO determine winner
-
     /**
      * Checks if the board is full and no new marks can be placed
      * @return true if the board is full; false otherwise
@@ -72,7 +70,6 @@ public class GameBoard {
         return board[pos.getX()][pos.getY()].equals(EMPTY);
     }
 
-    // TODO ugly and not consistent!
     @JsonProperty
     public String[][] getBoard() {
         return this.board;
@@ -127,15 +124,5 @@ public class GameBoard {
     private boolean checkDiagonal() {
         return checkEntries(board[0][0], board[1][1], board[2][2]) ||
             checkEntries(board[2][0], board[1][1], board[2][0]);
-    }
-
-    // TODO pretty print board
-    private String getEntry(Position pos) {
-        if (board[pos.getX()][pos.getY()].equals(EMPTY)) {
-            Integer p = pos.ordinal();
-            return p.toString();
-        } else {
-            return board[pos.getX()][pos.getY()];
-        }
     }
 }

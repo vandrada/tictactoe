@@ -8,10 +8,10 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/play")
 @Produces(MediaType.APPLICATION_JSON)
-public class GamePlayResource {
+public class PlayGameResource {
     private final GameManager gameManager;
 
-    public GamePlayResource(GameManager listing) {
+    public PlayGameResource(GameManager listing) {
         this.gameManager = listing;
     }
 
@@ -26,7 +26,6 @@ public class GamePlayResource {
             return new Move(game, game.getPlayerByToken(token),
                             Position.values()[pos]);
         }
-        // TODO return something else
         return null;
     }
 

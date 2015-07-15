@@ -2,7 +2,7 @@ package com.vincent.tictactoe;
 
 import com.vincent.tictactoe.core.GameManager;
 import com.vincent.tictactoe.resources.GameListingResource;
-import com.vincent.tictactoe.resources.GamePlayResource;
+import com.vincent.tictactoe.resources.PlayGameResource;
 import com.vincent.tictactoe.resources.JoinGameResource;
 import com.vincent.tictactoe.resources.NewGameResource;
 import io.dropwizard.Application;
@@ -45,10 +45,8 @@ public class TicTacToeApplication extends Application<TicTacToeConfiguration> {
         final GameListingResource gameListing = new GameListingResource(gameManager);
         environment.jersey().register(gameListing);
 
-        final GamePlayResource gamePlay = new GamePlayResource(gameManager);
+        final PlayGameResource gamePlay = new PlayGameResource(gameManager);
         environment.jersey().register(gamePlay);
-
-        // TODO health check
     }
 
 }

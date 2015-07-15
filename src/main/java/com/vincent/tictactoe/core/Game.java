@@ -31,7 +31,7 @@ public class Game {
         this.id = id;
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-        this.currentPlayer = playerOne;   // TODO randomize?
+        this.currentPlayer = playerOne;
         this.board = new GameBoard();
         determineGameStatus();
     }

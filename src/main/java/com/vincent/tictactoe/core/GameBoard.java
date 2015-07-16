@@ -123,6 +123,6 @@ public class GameBoard {
      */
     private boolean checkDiagonal() {
         return checkEntries(board[0][0], board[1][1], board[2][2]) ||
-            checkEntries(board[2][0], board[1][1], board[2][0]);
+            checkEntries(board[0][2], board[1][1], board[2][0]);
     }
 }

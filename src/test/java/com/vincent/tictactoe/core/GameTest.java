@@ -48,6 +48,29 @@ public class GameTest {
         assertTrue(game.isActive());
     }
 
+    @Test
+    public void testDiagonals() {
+        game.updateBoard(Position.TOP_LEFT, "X");
+        game.updateBoard(Position.TOP_CENTER, "O");
+        game.updateBoard(Position.CENTER, "X");
+        game.updateBoard(Position.BOTTOM_LEFT, "X");
+        game.updateBoard(Position.BOTTOM_RIGHT, "O");
+
+        assertTrue("Game should be active", game.isActive());
+    }
+
+    @Test
+    public void testNoWinner() {
+        game.updateBoard(Position.TOP_LEFT, "O");
+        game.updateBoard(Position.CENTER_LEFT, "O");
+        game.updateBoard(Position.CENTER, "X");
+        game.updateBoard(Position.CENTER_RIGHT, "X");
+        game.updateBoard(Position.BOTTOM_LEFT, "X");
+
+        assertTrue(game.isActive());
+        assertEquals(game.getGameStatus(), new Active());
+    }
+
     /* GameWin */
     @Test
     public void gameOverDiagonalOne() {

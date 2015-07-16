@@ -73,6 +73,18 @@ public class GameBoardTest {
     }
 
     @Test
+    public void testRandom() {
+        GameBoard gb = new GameBoard();
+        gb.mark(Position.TOP_LEFT, "O");
+        gb.mark(Position.CENTER_LEFT, "O");
+        gb.mark(Position.CENTER, "X");
+        gb.mark(Position.CENTER_RIGHT, "X");
+        gb.mark(Position.BOTTOM_LEFT, "X");
+
+        assertEquals(false, gb.check());
+    }
+
+    @Test
     public void testVerticalFail() {
         GameBoard gb = new GameBoard();
         gb.mark(Position.BOTTOM_LEFT, "X");

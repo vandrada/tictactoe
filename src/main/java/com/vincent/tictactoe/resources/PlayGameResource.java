@@ -24,8 +24,9 @@ public class PlayGameResource {
                      @QueryParam("pos") int pos) {
         Game game = gameManager.getGame(id);
         if (game.validToken(token) && game.isActive()) {
-            return Optional.of(new Move(game, game.getPlayerByToken(token),
-                                        Position.values()[pos]));
+            return Optional.of(new Move(game,
+                game.getPlayerByToken(token).get(),
+                Position.values()[pos]));
         }
         return Optional.absent();
     }
@@ -36,13 +37,13 @@ public class PlayGameResource {
      */
     @GET
     @Path("/{id}/{token}")
-    public GameInfo getInfo(@PathParam("id") long id,
+    public Optional<GameInfo> getInfo(@PathParam("id") long id,
                             @PathParam("token") String token) {
         Game game = gameManager.getGame(id);
         System.out.println(game.getId());
         if (game.validToken(token)) {
-            return new GameInfo(game);
+            return Optional.of(new GameInfo(game));
         }
-        return null;
+        return Optional.absent();
     }
 }

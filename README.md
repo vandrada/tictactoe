@@ -3,7 +3,8 @@ Candidate project for Main Street Hub
 
 ## Building and Running
 - `cd` into `tictactoe/`
-- execute `mvn package`
+- execute `mvn package` to build the fat JAR
+- run the JAR with `java -jar target/tictactoe-1.0-SNAPSHOT.jar server config.yml`
 
 ## Commands
 - `list`: list the current games

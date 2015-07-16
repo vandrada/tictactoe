@@ -2,7 +2,7 @@ package com.vincent.tictactoe.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.google.common.base.Optional;
 import com.vincent.tictactoe.core.status.*;
 
 /**
@@ -45,19 +45,19 @@ public class Game {
         }
     }
 
-    public Player getPlayerByToken(String token) {
+    public Optional<Player> getPlayerByToken(String token) {
         if (token.equals(playerOne.getToken())) {
-            return playerOne;
+            return Optional.of(playerOne);
         }
         if (token.equals(playerTwo.getToken())) {
-            return playerTwo;
+            return Optional.of(playerTwo);
         }
 
-        return null;
+        return Optional.absent();
     }
 
     public boolean validToken(String token) {
-        return getPlayerByToken(token) != null;
+        return getPlayerByToken(token).isPresent();
     }
 
     public boolean positionEmpty(Position pos) {

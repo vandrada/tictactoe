@@ -194,6 +194,6 @@ public class GameTest {
     public void testGetToken() {
         String token = "asjhfd";
         player1.setToken(token);
-        assertEquals(player1, game.getPlayerByToken(token));
+        assertEquals(player1, game.getPlayerByToken(token).get());
     }
 }

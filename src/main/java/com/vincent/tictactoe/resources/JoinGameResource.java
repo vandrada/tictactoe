@@ -31,8 +31,10 @@ public class JoinGameResource {
                               @QueryParam("name") Optional<String> name) {
         Player player = new Player(name.or(player2Default));
         player.setMark(this.player2Mark);
-        Game game = gameManager.addSecondPlayer(id, player);
-
-        return Optional.of(new GameToken(game, player));
+        if (gameManager.getGame(id).joinable()) {
+            Game game = gameManager.addSecondPlayer(id, player);
+            return Optional.of(new GameToken(game, player));
+        }
+        return Optional.absent();
     }
 }

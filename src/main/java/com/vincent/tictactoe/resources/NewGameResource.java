@@ -29,10 +29,11 @@ public class NewGameResource {
 
     @GET
     @Timed
-    public GameToken newGame(@QueryParam("name") Optional<String> player1) {
+    public Optional<GameToken> newGame(@QueryParam("name") Optional<String>
+                                               player1) {
         Player player = new Player(player1.or(player1Default));
         player.setMark(this.player1Mark);
         Game game = gameManager.createGame(player);
-        return new GameToken(game, player);
+        return Optional.of(new GameToken(game, player));
     }
 }

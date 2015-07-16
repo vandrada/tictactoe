@@ -1,6 +1,7 @@
 package com.vincent.tictactoe.resources;
 
 import com.codahale.metrics.annotation.Timed;
+import com.google.common.base.Optional;
 import com.vincent.tictactoe.core.*;
 
 import javax.ws.rs.*;
@@ -18,15 +19,15 @@ public class PlayGameResource {
     @GET
     @Timed
     @Path("/{id}/{token}/move")
-    public Move mark(@PathParam("token") String token,
-                     @PathParam("game") long id,
+    public Optional<Move> mark(@PathParam("token") String token,
+                     @PathParam("id") long id,
                      @QueryParam("pos") int pos) {
         Game game = gameManager.getGame(id);
         if (game.validToken(token) && game.isActive()) {
-            return new Move(game, game.getPlayerByToken(token),
-                            Position.values()[pos]);
+            return Optional.of(new Move(game, game.getPlayerByToken(token),
+                                        Position.values()[pos]));
         }
-        return null;
+        return Optional.absent();
     }
 
     /**
@@ -36,8 +37,9 @@ public class PlayGameResource {
     @GET
     @Path("/{id}/{token}")
     public GameInfo getInfo(@PathParam("id") long id,
-                        @PathParam("token") String token) {
+                            @PathParam("token") String token) {
         Game game = gameManager.getGame(id);
+        System.out.println(game.getId());
         if (game.validToken(token)) {
             return new GameInfo(game);
         }

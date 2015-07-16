@@ -1,13 +1,17 @@
 # RESTful Tic-tac-toe
 Candidate project for Main Street Hub
 
+## Building and Running
+- `cd` into `tictactoe/`
+- execute `mvn package`
+
 ## Commands
 - `list`: list the current games
 - `new-game<?name={name}>`: creates a new game and adds you as the first player
    with the name `name`. If no name is supplied the default name of "Player1"
    is used. In the response a token is returned. This token must be passed to
    play the game
-- `join-game/{id}<&name={name}>: joins the game with the id of `id` and adds
+- `join-game/{id}<&name={name}>`: joins the game with the id of `id` and adds
    you as the second player with the name `name`. If no name is supplied the
    default name of "Player2" is used. In the response a token is returned. This
    token must be passed to play the game.

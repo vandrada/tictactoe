@@ -116,7 +116,7 @@ public class Game {
     public void determineGameStatus() {
         if (this.joinable()) {
             this.status = new Available();
-        } else if (this.board.full()) {
+        } else if (this.board.full() && !this.board.check()) {
             this.status = new Tie();
         } else if (this.board.check()) {
             this.status = new GameWin();

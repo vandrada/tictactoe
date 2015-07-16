@@ -93,6 +93,25 @@ public class GameTest {
         assertFalse(game.isActive());
     }
 
+    @Test
+    public void gameFullAndWin() {
+        game.updateBoard(Position.TOP_LEFT, "X");
+        game.updateBoard(Position.TOP_CENTER, "O");
+        game.updateBoard(Position.TOP_RIGHT, "X");
+        // center
+        game.updateBoard(Position.CENTER_LEFT, "O");
+        game.updateBoard(Position.CENTER, "X");
+        game.updateBoard(Position.CENTER_RIGHT, "O");
+        // bottom
+        game.updateBoard(Position.BOTTOM_LEFT, "O");
+        game.updateBoard(Position.BOTTOM_CENTER, "X");
+        game.updateBoard(Position.BOTTOM_RIGHT, "X");
+
+        assertEquals("Game with vertical win should be GameWin",
+            new GameWin(), game.getGameStatus());
+        assertFalse(game.isActive());
+    }
+
     /* Tie */
     @Test
     public void gameTie() {

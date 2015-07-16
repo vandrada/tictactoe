@@ -27,12 +27,12 @@ public class JoinGameResource {
     @GET
     @Timed
     @Path("/{id}")
-    public GameToken joinGame(@PathParam("id") long id,
+    public Optional<GameToken> joinGame(@PathParam("id") long id,
                               @QueryParam("name") Optional<String> name) {
         Player player = new Player(name.or(player2Default));
         player.setMark(this.player2Mark);
         Game game = gameManager.addSecondPlayer(id, player);
 
-        return new GameToken(game, player);
+        return Optional.of(new GameToken(game, player));
     }
 }

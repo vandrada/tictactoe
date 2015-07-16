@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
 public class GameManagerTest {
@@ -47,6 +48,12 @@ public class GameManagerTest {
     @Test
     public void noIdReturnsNull() {
         assertNull("Invalid ID should return null", manager.getGame(1232132));
+    }
+
+    @Test
+    public void notEqualOtherId() {
+        manager.createGame(new Player());
+        assertNotEquals(manager.getGame(0), manager.getGame(1));
     }
 
     @Test

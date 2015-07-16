@@ -50,8 +50,8 @@ public class GameManager {
                 this.games.put(id, new Game(game.getId(),
                     game.getFirstPlayer(),
                     player));
-                // since `put` returns the *previous* value...
                 this.games.get(id).determineGameStatus();
+                // since `put` returns the *previous* value...
                 return this.games.get(id);
             }
         }

@@ -36,6 +36,11 @@ public class Game {
         determineGameStatus();
     }
 
+    /**
+     * Updates the board
+     * @param pos the position to place the mark
+     * @param mark the mark to place at {@code pos}
+     */
     public void updateBoard(Position pos, String mark) {
         // Don't let players set a mark before someone has joined
         if (this.isActive()) {
@@ -45,6 +50,11 @@ public class Game {
         }
     }
 
+    /**
+     * Retrieves either Player One or Player 2 based on their token
+     * @param token the token to match against this Game's players
+     * @return a player with token {@code token} or null wrapped in an Option
+     */
     public Optional<Player> getPlayerByToken(String token) {
         if (token.equals(playerOne.getToken())) {
             return Optional.of(playerOne);
@@ -56,23 +66,46 @@ public class Game {
         return Optional.absent();
     }
 
+    /**
+     * Checks if a token is valid for this Game, i.e it matches a player that
+     * is attached to this Game
+     * @param token the token to check
+     * @return true if the token is associated with a Player; or false
+     */
     public boolean validToken(String token) {
         return getPlayerByToken(token).isPresent();
     }
 
+    /**
+     * Checks if a position in empty
+     * @param pos the position to check
+     * @return true if the position is empty; false otherwise
+     */
     public boolean positionEmpty(Position pos) {
         return this.board.isEmpty(pos);
     }
 
+    /**
+     * Checks if a Player is the current Player
+     * @param player the Player to check
+     * @return true if the Player is the current Player; false otherwise
+     */
     public boolean isCurrentPlayer(Player player) {
         return player.getToken().equals(this.currentPlayer.getToken());
     }
 
+    /**
+     * @return true if the Game is active; false otherwise
+     */
     @JsonIgnore
     public boolean isActive() {
         return this.status.equals(new Active());
     }
 
+    /**
+     * Alternates between the Players in this game
+     * @return the "next" Player
+     */
     @JsonIgnore
     public Player otherPlayer() {
         if (this.currentPlayer == this.getFirstPlayer()) {
@@ -82,9 +115,29 @@ public class Game {
         }
     }
 
+    /**
+     * @return true if the Game only has one Player; false otherwise
+     */
     @JsonIgnore
     public boolean joinable() {
         return this.playerOne == null || this.playerTwo == null;
+    }
+
+    /**
+     * Determines the status of the Game. The status could be any of the
+     * subclasses of {@code GameStatus}
+     */
+    @JsonProperty
+    public void determineGameStatus() {
+        if (this.joinable()) {
+            this.status = new Available();
+        } else if (this.board.full() && !this.board.check()) {
+            this.status = new Tie();
+        } else if (this.board.check()) {
+            this.status = new GameWin();
+        } else {
+            this.status = new Active();
+        }
     }
 
     @JsonIgnore
@@ -110,19 +163,6 @@ public class Game {
     @JsonProperty
     public GameStatus getGameStatus() {
         return this.status;
-    }
-
-    @JsonProperty
-    public void determineGameStatus() {
-        if (this.joinable()) {
-            this.status = new Available();
-        } else if (this.board.full() && !this.board.check()) {
-            this.status = new Tie();
-        } else if (this.board.check()) {
-            this.status = new GameWin();
-        } else {
-            this.status = new Active();
-        }
     }
 
     @JsonProperty

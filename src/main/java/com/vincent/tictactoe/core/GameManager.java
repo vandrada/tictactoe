@@ -37,6 +37,12 @@ public class GameManager {
         return game;
     }
 
+    /**
+     * Adds a second player to a Game
+     * @param id the id of the Game to add a second player to
+     * @param player the player to add
+     * @return the Game after adding the second player or null
+     */
     public Game addSecondPlayer(long id, Player player) {
         if (this.games.containsKey(id)) {
             Game game = this.games.get(id);
@@ -53,14 +59,26 @@ public class GameManager {
         return null;
     }
 
+    /**
+     * Removes a Game from the GameManager
+     * @param game the game to remove
+     */
     public void removeGame(Game game) {
         this.games.remove(game.getId());
     }
 
+    /**
+     * Fetches a Game from the GameManager that has id {@code id}
+     * @param id the id of the Game to fetch
+     * @return the Game with id {@code id}
+     */
     public Game getGame(long id) {
         return this.games.get(id);
     }
 
+    /**
+     * @return the Games in the GameManager
+     */
     @JsonProperty
     public Game[] getGames() {
         return this.games.values().toArray(new Game[this.games.size()]);

@@ -1,7 +1,7 @@
 package com.vincent.tictactoe.core;
 
 /**
- * A Position on a tic-tac-toe board. Since these Positions are used for a
+ * A Position on a tic-tac-toe board. Since these Positions are used on a
  * 2-D board, each position has a `getX` and `getY` method.
  */
 public enum Position {

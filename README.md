@@ -1,5 +1,4 @@
 # RESTful Tic-tac-toe
-Candidate project for Main Street Hub
 
 ## Building and Running
 - `cd` into `tictactoe/`
